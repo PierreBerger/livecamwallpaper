@@ -3,18 +3,22 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F39DD882627A77800F0C010 /* Defaults in Frameworks */ = {isa = PBXBuildFile; productRef = 8F39DD872627A77800F0C010 /* Defaults */; };
+		8F39DDAC2628EE2B00F0C010 /* SkapingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F39DDAB2628EE2B00F0C010 /* SkapingController.swift */; };
+		8F39DDB42628F00200F0C010 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F39DDB32628F00200F0C010 /* Events.swift */; };
+		8F39DDB92628F90100F0C010 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F39DDB82628F90100F0C010 /* Utilities.swift */; };
 		8F9AFE04261FA93C0086DCCA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AFE03261FA93C0086DCCA /* AppDelegate.swift */; };
-		8F9AFE06261FA93C0086DCCA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AFE05261FA93C0086DCCA /* ContentView.swift */; };
 		8F9AFE09261FA93C0086DCCA /* LivecamWallpaper.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AFE07261FA93C0086DCCA /* LivecamWallpaper.xcdatamodeld */; };
 		8F9AFE0B261FA93F0086DCCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F9AFE0A261FA93F0086DCCA /* Assets.xcassets */; };
 		8F9AFE0E261FA93F0086DCCA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F9AFE0D261FA93F0086DCCA /* Preview Assets.xcassets */; };
 		8F9AFE11261FA93F0086DCCA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F9AFE0F261FA93F0086DCCA /* Main.storyboard */; };
-		8F9AFE1D261FA9400086DCCA /* LivecamWallpaperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AFE1C261FA9400086DCCA /* LivecamWallpaperTests.swift */; };
-		8F9AFE28261FA9400086DCCA /* LivecamWallpaperUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AFE27261FA9400086DCCA /* LivecamWallpaperUITests.swift */; };
+		8F9AFE802623768D0086DCCA /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AFE7F2623768D0086DCCA /* Preferences.swift */; };
+		8F9AFE942627809F0086DCCA /* skapingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AFE932627809F0086DCCA /* skapingResponse.swift */; };
+		8F9AFE9F26279B200086DCCA /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AFE9E26279B200086DCCA /* Defaults.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,9 +39,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8F39DDAB2628EE2B00F0C010 /* SkapingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkapingController.swift; sourceTree = "<group>"; };
+		8F39DDB32628F00200F0C010 /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
+		8F39DDB82628F90100F0C010 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		8F9AFE00261FA93C0086DCCA /* LivecamWallpaper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LivecamWallpaper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F9AFE03261FA93C0086DCCA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8F9AFE05261FA93C0086DCCA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		8F9AFE08261FA93C0086DCCA /* LivecamWallpaper.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LivecamWallpaper.xcdatamodel; sourceTree = "<group>"; };
 		8F9AFE0A261FA93F0086DCCA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8F9AFE0D261FA93F0086DCCA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -45,11 +51,11 @@
 		8F9AFE12261FA93F0086DCCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8F9AFE13261FA93F0086DCCA /* LivecamWallpaper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LivecamWallpaper.entitlements; sourceTree = "<group>"; };
 		8F9AFE18261FA9400086DCCA /* LivecamWallpaperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LivecamWallpaperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		8F9AFE1C261FA9400086DCCA /* LivecamWallpaperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivecamWallpaperTests.swift; sourceTree = "<group>"; };
-		8F9AFE1E261FA9400086DCCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8F9AFE23261FA9400086DCCA /* LivecamWallpaperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LivecamWallpaperUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		8F9AFE27261FA9400086DCCA /* LivecamWallpaperUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivecamWallpaperUITests.swift; sourceTree = "<group>"; };
-		8F9AFE29261FA9400086DCCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8F9AFE7F2623768D0086DCCA /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		8F9AFE8826263A150086DCCA /* LivecamWallpaperRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LivecamWallpaperRelease.entitlements; sourceTree = "<group>"; };
+		8F9AFE932627809F0086DCCA /* skapingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = skapingResponse.swift; sourceTree = "<group>"; };
+		8F9AFE9E26279B200086DCCA /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F39DD882627A77800F0C010 /* Defaults in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,12 +84,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8F39DDAA2628EDFE00F0C010 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				8F39DDAB2628EE2B00F0C010 /* SkapingController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		8F9AFDF7261FA93B0086DCCA = {
 			isa = PBXGroup;
 			children = (
 				8F9AFE02261FA93C0086DCCA /* LivecamWallpaper */,
-				8F9AFE1B261FA9400086DCCA /* LivecamWallpaperTests */,
-				8F9AFE26261FA9400086DCCA /* LivecamWallpaperUITests */,
 				8F9AFE01261FA93C0086DCCA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -100,14 +113,20 @@
 		8F9AFE02261FA93C0086DCCA /* LivecamWallpaper */ = {
 			isa = PBXGroup;
 			children = (
+				8F39DDAA2628EDFE00F0C010 /* Controllers */,
+				8F9AFE922627807F0086DCCA /* Models */,
+				8F9AFE8826263A150086DCCA /* LivecamWallpaperRelease.entitlements */,
+				8F9AFE7B262376470086DCCA /* Views */,
 				8F9AFE03261FA93C0086DCCA /* AppDelegate.swift */,
-				8F9AFE05261FA93C0086DCCA /* ContentView.swift */,
 				8F9AFE0A261FA93F0086DCCA /* Assets.xcassets */,
 				8F9AFE0F261FA93F0086DCCA /* Main.storyboard */,
 				8F9AFE12261FA93F0086DCCA /* Info.plist */,
 				8F9AFE13261FA93F0086DCCA /* LivecamWallpaper.entitlements */,
 				8F9AFE07261FA93C0086DCCA /* LivecamWallpaper.xcdatamodeld */,
 				8F9AFE0C261FA93F0086DCCA /* Preview Content */,
+				8F9AFE9E26279B200086DCCA /* Defaults.swift */,
+				8F39DDB32628F00200F0C010 /* Events.swift */,
+				8F39DDB82628F90100F0C010 /* Utilities.swift */,
 			);
 			path = LivecamWallpaper;
 			sourceTree = "<group>";
@@ -120,22 +139,20 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		8F9AFE1B261FA9400086DCCA /* LivecamWallpaperTests */ = {
+		8F9AFE7B262376470086DCCA /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				8F9AFE1C261FA9400086DCCA /* LivecamWallpaperTests.swift */,
-				8F9AFE1E261FA9400086DCCA /* Info.plist */,
+				8F9AFE7F2623768D0086DCCA /* Preferences.swift */,
 			);
-			path = LivecamWallpaperTests;
+			path = Views;
 			sourceTree = "<group>";
 		};
-		8F9AFE26261FA9400086DCCA /* LivecamWallpaperUITests */ = {
+		8F9AFE922627807F0086DCCA /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				8F9AFE27261FA9400086DCCA /* LivecamWallpaperUITests.swift */,
-				8F9AFE29261FA9400086DCCA /* Info.plist */,
+				8F9AFE932627809F0086DCCA /* skapingResponse.swift */,
 			);
-			path = LivecamWallpaperUITests;
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -154,6 +171,9 @@
 			dependencies = (
 			);
 			name = LivecamWallpaper;
+			packageProductDependencies = (
+				8F39DD872627A77800F0C010 /* Defaults */,
+			);
 			productName = LivecamWallpaper;
 			productReference = 8F9AFE00261FA93C0086DCCA /* LivecamWallpaper.app */;
 			productType = "com.apple.product-type.application";
@@ -225,6 +245,9 @@
 				Base,
 			);
 			mainGroup = 8F9AFDF7261FA93B0086DCCA;
+			packageReferences = (
+				8F39DD862627A77800F0C010 /* XCRemoteSwiftPackageReference "Defaults" */,
+			);
 			productRefGroup = 8F9AFE01261FA93C0086DCCA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -268,8 +291,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F9AFE942627809F0086DCCA /* skapingResponse.swift in Sources */,
+				8F39DDAC2628EE2B00F0C010 /* SkapingController.swift in Sources */,
 				8F9AFE09261FA93C0086DCCA /* LivecamWallpaper.xcdatamodeld in Sources */,
-				8F9AFE06261FA93C0086DCCA /* ContentView.swift in Sources */,
+				8F9AFE9F26279B200086DCCA /* Defaults.swift in Sources */,
+				8F39DDB42628F00200F0C010 /* Events.swift in Sources */,
+				8F9AFE802623768D0086DCCA /* Preferences.swift in Sources */,
+				8F39DDB92628F90100F0C010 /* Utilities.swift in Sources */,
 				8F9AFE04261FA93C0086DCCA /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -278,7 +306,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F9AFE1D261FA9400086DCCA /* LivecamWallpaperTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,7 +313,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F9AFE28261FA9400086DCCA /* LivecamWallpaperUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,7 +485,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = LivecamWallpaper/LivecamWallpaper.entitlements;
+				CODE_SIGN_ENTITLEMENTS = LivecamWallpaper/LivecamWallpaperRelease.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"LivecamWallpaper/Preview Content\"";
@@ -596,6 +623,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8F39DD862627A77800F0C010 /* XCRemoteSwiftPackageReference "Defaults" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/Defaults";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.2.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8F39DD872627A77800F0C010 /* Defaults */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8F39DD862627A77800F0C010 /* XCRemoteSwiftPackageReference "Defaults" */;
+			productName = Defaults;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		8F9AFE07261FA93C0086DCCA /* LivecamWallpaper.xcdatamodeld */ = {

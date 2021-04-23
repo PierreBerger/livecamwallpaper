@@ -1,135 +1,201 @@
-//
-//  AppDelegate.swift
-//  LivecamWallpaper
-//
-//  Created by Pierre Berger on 08/04/2021.
-//
-
 import Cocoa
 import SwiftUI
+import Defaults
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
-
+    
+    static let shared = NSApp.delegate as! AppDelegate
+    
+    var statusBarItem: NSStatusItem!
+    var menu: NSMenu!
     var window: NSWindow!
-
-
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Create the SwiftUI view and set the context as the value for the managedObjectContext environment keyPath.
-        // Add `@Environment(\.managedObjectContext)` in the views that will need the context.
-        let contentView = ContentView().environment(\.managedObjectContext, persistentContainer.viewContext)
-
-        // Create the window and set the content view.
+    var isError = false
+    
+    var refreshTimer: Timer?
+    
+    func applicationDidFinishLaunching(_: Notification) {
+        setup()
+    }
+    
+    func changeWallpaper(savedUrl : URL) {
+        for nsScreen in NSScreen.screens {
+            print("screen : \(nsScreen)")
+            try! NSWorkspace.shared.setDesktopImageURL(savedUrl, for: nsScreen, options: [:])
+        }
+        clearError()
+        refreshMenu()
+    }
+    
+    func downloadImage(url: URL) {
+        URLSession.shared.downloadTask(with: url) {
+            urlOrNil, responseOrNil, errorOrNil in
+            // check for and handle errors:
+            // * errorOrNil should be nil
+            // * responseOrNil should be an HTTPURLResponse with statusCode in 200..<299
+            
+            guard let fileURL = urlOrNil else { return }
+            do {
+                let documentsURL = try
+                    FileManager.default.url(for: .documentDirectory,
+                                            in: .userDomainMask,
+                                            appropriateFor: nil,
+                                            create: false)
+                
+                print("last : \(fileURL.lastPathComponent)")
+                let savedURL = documentsURL.appendingPathComponent(fileURL.lastPathComponent)
+                try FileManager.default.moveItem(at: fileURL, to: savedURL)
+                print ("file url : \(savedURL)")
+                
+                self.changeWallpaper(savedUrl: savedURL)
+                
+                
+            } catch {
+                print ("file error: \(error)")
+            }
+        }.resume()
+        
+    }
+ 
+    func changeWallpaper(livecamURL: URL) {
+        SkapingController.shared.fetchImage(livecamURL: livecamURL)
+    }
+    
+    @objc func refreshWallpaper() {
+        NSSound(named: "Purr")?.play()
+        
+        if Defaults[.livecamUrl] != "" {
+            let url = URL(string: Defaults[.livecamUrl])!
+            self.changeWallpaper(livecamURL: url)
+        } else {
+            NSLog("Error: Url is missing")
+            setError(message: "Error: Url is missing")
+        }
+    }
+    
+    
+    func setError(message: String) {
+        self.displayError(message: message)
+        isError = true
+        refreshMenu()
+    }
+    
+    func clearError() {
+       
+        menu.item(at: 0)?.isHidden = true
+        menu.item(at: 1)?.isHidden = true
+            isError = false
+       
+    }
+    
+    func displayError(message: String) {
+       
+            menu.item(at: 0)?.title = message
+            menu.item(at: 0)?.isHidden = false
+            menu.item(at: 1)?.isHidden = false
+    
+    }
+    
+    func refreshMenu() {
+        menu.item(at: 2)?.title = Defaults[.livecamUrl].truncating(to: 30)
+        menu.item(at: 3)?.title = Defaults[.livecamTitle].truncating(to: 30)
+        menu.item(at: 2)?.isHidden = false
+        menu.item(at: 3)?.isHidden = false
+        menu.item(at: 4)?.isHidden = false
+        
+        if  Defaults[.livecamUrl] == "" {
+            menu.item(at: 2)?.isHidden = true
+            menu.item(at: 3)?.isHidden = true
+        }
+        
+        if  Defaults[.livecamTitle] == "" {
+            menu.item(at: 3)?.isHidden = true
+        }
+        
+        if menu.item(at: 2)?.isHidden == true && menu.item(at: 3)?.isHidden == true {
+            menu.item(at: 4)?.isHidden = true
+        }
+    }
+    
+    func resetInterval() {
+        refreshTimer?.invalidate()
+        refreshTimer = Timer.scheduledTimer(timeInterval:Double(Defaults[.refreshInterval]*60), target: self, selector: #selector(refreshWallpaper), userInfo: nil, repeats: true)
+        refreshTimer?.fire()
+    }
+    
+    func setupMenu() {
+        let errorMenu = NSMenuItem(title: "" , action: nil, keyEquivalent: "")
+        errorMenu.isHidden = true
+        menu.addItem(errorMenu)
+        menu.addItem(.separator())
+        
+        menu.item(at: 1)?.isHidden = true
+        
+        let menuUrl = NSMenuItem(title: "\(Defaults[.livecamUrl])".truncating(to: 30) , action: nil, keyEquivalent: "")
+        menuUrl.isEnabled = false
+     
+        let menuTitle = NSMenuItem(title: "\(Defaults[.livecamTitle])".truncating(to: 30) , action: nil, keyEquivalent: "")
+        menuTitle.isEnabled = false
+        
+        if Defaults[.livecamUrl] == "" &&  Defaults[.livecamTitle] == "" {
+            menuUrl.isHidden = true
+            menuTitle.isHidden = true
+        }
+       
+        menu.addItem(menuUrl)
+        menu.addItem(menuTitle)
+        menu.addItem(.separator())
+    
+        menu.addItem(withTitle: "Preferences", action: #selector(openPreferences), keyEquivalent: ",")
+        menu.addItem(.separator())
+        menu.addItem(withTitle: "Quit", action: #selector(terminate), keyEquivalent: "q")
+    }
+    
+    func setup() {
+        menu = NSMenu()
+        setupMenu()
+        statusBarItem = NSStatusBar.system.statusItem(withLength: CGFloat(NSStatusItem.variableLength))
+        statusBarItem.menu = menu
+        
+        if let statusBarButton = statusBarItem.button {
+            statusBarButton.image = NSImage(named: "StatusIcon")
+        }
+                
+        Defaults.observe(.refreshInterval) { change in
+            NSLog("Changed refreshInterval from \(String(describing: change.oldValue)) to \(String(describing: change.newValue))")
+            self.resetInterval()
+        }.tieToLifetime(of: self)
+        
+    }
+    
+    @objc func openPreferences(_: NSStatusBarButton?) {
+        NSLog("Open preferences window")
+        let contentView = PreferencesView()
+        if window != nil {
+            window.close()
+        }
         window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 480, height: 300),
-            styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
-            backing: .buffered, defer: false)
-        window.center()
-        window.setFrameAutosaveName("Main Window")
+            contentRect: NSRect(x: 0, y: 0, width: 700, height: 570),
+            styleMask: [.closable, .titled, .resizable],
+            backing: .buffered,
+            defer: false
+        )
+        
+        window.title = "LivecamWallpaper Preferences"
         window.contentView = NSHostingView(rootView: contentView)
         window.makeKeyAndOrderFront(nil)
-    }
-
-    func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
-    }
-
-    // MARK: - Core Data stack
-
-    lazy var persistentContainer: NSPersistentContainer = {
-        /*
-         The persistent container for the application. This implementation
-         creates and returns a container, having loaded the store for the
-         application to it. This property is optional since there are legitimate
-         error conditions that could cause the creation of the store to fail.
-        */
-        let container = NSPersistentContainer(name: "LivecamWallpaper")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                 
-                /*
-                 Typical reasons for an error here include:
-                 * The parent directory does not exist, cannot be created, or disallows writing.
-                 * The persistent store is not accessible, due to permissions or data protection when the device is locked.
-                 * The device is out of space.
-                 * The store could not be migrated to the current model version.
-                 Check the error message to determine what the actual problem was.
-                 */
-                fatalError("Unresolved error \(error)")
-            }
-        })
-        return container
-    }()
-
-    // MARK: - Core Data Saving and Undo support
-
-    @IBAction func saveAction(_ sender: AnyObject?) {
-        // Performs the save action for the application, which is to send the save: message to the application's managed object context. Any encountered errors are presented to the user.
-        let context = persistentContainer.viewContext
-
-        if !context.commitEditing() {
-            NSLog("\(NSStringFromClass(type(of: self))) unable to commit editing before saving")
-        }
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                // Customize this code block to include application-specific recovery steps.
-                let nserror = error as NSError
-                NSApplication.shared.presentError(nserror)
-            }
-        }
-    }
-
-    func windowWillReturnUndoManager(window: NSWindow) -> UndoManager? {
-        // Returns the NSUndoManager for the application. In this case, the manager returned is that of the managed object context for the application.
-        return persistentContainer.viewContext.undoManager
-    }
-
-    func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
-        // Save changes in the application's managed object context before the application terminates.
-        let context = persistentContainer.viewContext
         
-        if !context.commitEditing() {
-            NSLog("\(NSStringFromClass(type(of: self))) unable to commit editing to terminate")
-            return .terminateCancel
-        }
+        NSApplication.shared.activate(ignoringOtherApps: true)
         
-        if !context.hasChanges {
-            return .terminateNow
-        }
+        let controller = NSWindowController(window: window)
+        controller.showWindow(self)
         
-        do {
-            try context.save()
-        } catch {
-            let nserror = error as NSError
-
-            // Customize this code block to include application-specific recovery steps.
-            let result = sender.presentError(nserror)
-            if (result) {
-                return .terminateCancel
-            }
-            
-            let question = NSLocalizedString("Could not save changes while quitting. Quit anyway?", comment: "Quit without saves error question message")
-            let info = NSLocalizedString("Quitting now will lose any changes you have made since the last successful save", comment: "Quit without saves error question info");
-            let quitButton = NSLocalizedString("Quit anyway", comment: "Quit anyway button title")
-            let cancelButton = NSLocalizedString("Cancel", comment: "Cancel button title")
-            let alert = NSAlert()
-            alert.messageText = question
-            alert.informativeText = info
-            alert.addButton(withTitle: quitButton)
-            alert.addButton(withTitle: cancelButton)
-            
-            let answer = alert.runModal()
-            if answer == .alertSecondButtonReturn {
-                return .terminateCancel
-            }
-        }
-        // If we got here, it is time to quit.
-        return .terminateNow
+        window.center()
+        window.orderFrontRegardless()
     }
-
+    
+    @objc func terminate() {
+        NSLog("Quit Application")
+        NSApp.terminate(self)
+    }
 }
-
