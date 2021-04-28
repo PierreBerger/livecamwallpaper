@@ -19,12 +19,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func changeWallpaper(savedUrl : URL) {
-        for nsScreen in NSScreen.screens {
-            print("screen : \(nsScreen)")
-            try! NSWorkspace.shared.setDesktopImageURL(savedUrl, for: nsScreen, options: [:])
+        do {
+            for nsScreen in NSScreen.screens {
+                try NSWorkspace.shared.setDesktopImageURL(savedUrl, for: nsScreen, options: [:])
+            }
+            clearError()
+            refreshMenu()
+        } catch {
+            setError(message: error.localizedDescription)
         }
-        clearError()
-        refreshMenu()
     }
     
     func downloadImage(url: URL) {
@@ -36,14 +39,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             guard let fileURL = urlOrNil else { return }
             do {
+                
                 let documentsURL = try
                     FileManager.default.url(for: .documentDirectory,
                                             in: .userDomainMask,
                                             appropriateFor: nil,
                                             create: false)
                 
-                print("last : \(fileURL.lastPathComponent)")
-                let savedURL = documentsURL.appendingPathComponent(fileURL.lastPathComponent)
+                    let savedURL = documentsURL.appendingPathComponent(fileURL.lastPathComponent)
                 try FileManager.default.moveItem(at: fileURL, to: savedURL)
                 print ("file url : \(savedURL)")
                 
@@ -51,19 +54,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 
                 
             } catch {
-                print ("file error: \(error)")
+                self.setError(message: error.localizedDescription)
             }
         }.resume()
         
     }
  
     func changeWallpaper(livecamURL: URL) {
-        SkapingController.shared.fetchImage(livecamURL: livecamURL)
+        SkapingController.shared.fetchImage(livecamURL: livecamURL) { error in
+            guard error == nil else {
+                self.setError(message: error!)
+                return
+            }
+        }
     }
     
     @objc func refreshWallpaper() {
-        NSSound(named: "Purr")?.play()
-        
         if Defaults[.livecamUrl] != "" {
             let url = URL(string: Defaults[.livecamUrl])!
             self.changeWallpaper(livecamURL: url)
@@ -81,7 +87,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func clearError() {
-       
         menu.item(at: 0)?.isHidden = true
         menu.item(at: 1)?.isHidden = true
             isError = false
@@ -89,7 +94,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func displayError(message: String) {
-       
             menu.item(at: 0)?.title = message
             menu.item(at: 0)?.isHidden = false
             menu.item(at: 1)?.isHidden = false
