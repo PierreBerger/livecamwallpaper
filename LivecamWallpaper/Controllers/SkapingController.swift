@@ -8,6 +8,7 @@ final class SkapingController {
         URLSession.shared.dataTask(with: livecamURL) { data, response, error in
             if let error = error {
                 completion("Error: \(error.localizedDescription)")
+                return
             }
             guard let httpResponse = response as? HTTPURLResponse,
                   (200...299).contains(httpResponse.statusCode) else {
@@ -53,7 +54,7 @@ final class SkapingController {
             
             URLSession.shared.dataTask(with: request) { data, response, error in
                 if let error = error {
-                    print("error \(error)")
+                    completion("Error: \(error.localizedDescription)")
                     return
                 }
                 
