@@ -1,6 +1,8 @@
 import Cocoa
 import SwiftUI
 import Defaults
+import Bugsnag
+
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -15,6 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var refreshTimer: Timer?
     
     func applicationDidFinishLaunching(_: Notification) {
+        Bugsnag.start()
         setup()
     }
     

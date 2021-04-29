@@ -30,5 +30,10 @@
 	<string>Main</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>bugsnag</key>
+	<dict>
+		<key>apiKey</key>
+		<string>2f548a3332285cfbc81f38401ef285f3</string>
+	</dict>
 </dict>
 </plist>

@@ -11,6 +11,7 @@
 		8F39DDAC2628EE2B00F0C010 /* SkapingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F39DDAB2628EE2B00F0C010 /* SkapingController.swift */; };
 		8F39DDB42628F00200F0C010 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F39DDB32628F00200F0C010 /* Events.swift */; };
 		8F39DDB92628F90100F0C010 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F39DDB82628F90100F0C010 /* Utilities.swift */; };
+		8F5CEDA3263B5296009481E4 /* Bugsnag in Frameworks */ = {isa = PBXBuildFile; productRef = 8F5CEDA2263B5296009481E4 /* Bugsnag */; };
 		8F9AFE04261FA93C0086DCCA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AFE03261FA93C0086DCCA /* AppDelegate.swift */; };
 		8F9AFE09261FA93C0086DCCA /* LivecamWallpaper.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AFE07261FA93C0086DCCA /* LivecamWallpaper.xcdatamodeld */; };
 		8F9AFE0B261FA93F0086DCCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F9AFE0A261FA93F0086DCCA /* Assets.xcassets */; };
@@ -44,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F5CEDA3263B5296009481E4 /* Bugsnag in Frameworks */,
 				8F39DD882627A77800F0C010 /* Defaults in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -138,6 +140,7 @@
 			name = LivecamWallpaper;
 			packageProductDependencies = (
 				8F39DD872627A77800F0C010 /* Defaults */,
+				8F5CEDA2263B5296009481E4 /* Bugsnag */,
 			);
 			productName = LivecamWallpaper;
 			productReference = 8F9AFE00261FA93C0086DCCA /* LivecamWallpaper.app */;
@@ -168,6 +171,7 @@
 			mainGroup = 8F9AFDF7261FA93B0086DCCA;
 			packageReferences = (
 				8F39DD862627A77800F0C010 /* XCRemoteSwiftPackageReference "Defaults" */,
+				8F5CEDA1263B5296009481E4 /* XCRemoteSwiftPackageReference "bugsnag-cocoa" */,
 			);
 			productRefGroup = 8F9AFE01261FA93C0086DCCA /* Products */;
 			projectDirPath = "";
@@ -420,6 +424,14 @@
 				minimumVersion = 4.2.1;
 			};
 		};
+		8F5CEDA1263B5296009481E4 /* XCRemoteSwiftPackageReference "bugsnag-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/bugsnag/bugsnag-cocoa";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.9.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -427,6 +439,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8F39DD862627A77800F0C010 /* XCRemoteSwiftPackageReference "Defaults" */;
 			productName = Defaults;
+		};
+		8F5CEDA2263B5296009481E4 /* Bugsnag */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8F5CEDA1263B5296009481E4 /* XCRemoteSwiftPackageReference "bugsnag-cocoa" */;
+			productName = Bugsnag;
 		};
 /* End XCSwiftPackageProductDependency section */
 
