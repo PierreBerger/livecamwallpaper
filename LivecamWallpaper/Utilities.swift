@@ -3,11 +3,10 @@ import SwiftUI
 // see https://github.com/sindresorhus/Plash/blob/4ebd13ba47632aba072ad4abe4ace9a2b7b3539c/Plash/Utilities.swift#L533
 
 extension String {
-        
     var trimmedTrailing: Self {
         replacingOccurrences(of: #"\s+$"#, with: "", options: .regularExpression)
     }
-    
+
     func truncating(to number: Int, truncationIndicator: Self = "…") -> Self {
         if number <= 0 {
             return ""
@@ -17,7 +16,7 @@ extension String {
             return self
         }
     }
-    
+
     func wrapped(atLength length: Int) -> Self {
         var string = ""
         var currentLineLength = 0
@@ -46,7 +45,7 @@ extension String {
 enum MyApp {
     static let isFirstLaunch: Bool = {
         let key = "hasLaunched"
-        
+
         if UserDefaults.standard.bool(forKey: key) {
             return false
         } else {
@@ -56,4 +55,6 @@ enum MyApp {
     }()
 }
 
-
+extension AppDelegate {
+    static let shared = NSApp.delegate as! AppDelegate
+}

@@ -1,8 +1,7 @@
-import SwiftUI
 import Defaults
+import SwiftUI
 
 struct PreferencesView: View {
-    
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
             ServicesSection()
@@ -12,14 +11,13 @@ struct PreferencesView: View {
             PreferencesSection()
         }
         .padding()
-        
     }
 }
 
 struct ServicesSection: View {
     var services = ["Skaping"]
     @State var selectedService = "Skaping"
-    
+
     var body: some View {
         Text("Livecam services").font(.headline).bold()
         Picker("Service :", selection: $selectedService) {
@@ -27,27 +25,23 @@ struct ServicesSection: View {
                 Text($0)
             }
         }.frame(width: 150, alignment: .leading)
-        
     }
-    
 }
 
 struct SettingsSection: View {
     @Default(.livecamUrl) var livecamUrl
     @State var text = Defaults[.livecamUrl]
-    
+
     var body: some View {
         Text("Settings").font(.headline).bold()
         HStack {
             Text("Livecam Url :")
             TextField("https://www.skaping.com/grenoble/col-de-porte", text: $text)
-            Button(action: {
+            Button("Update", action: {
                 NSLog("Update click")
                 livecamUrl = text
                 AppDelegate.shared.resetInterval()
-            }) {
-                Text("Update")
-            }
+            })
         }
     }
 }
@@ -55,11 +49,9 @@ struct SettingsSection: View {
 struct PreferencesSection: View {
     var refreshTimes = [10, 20, 30, 60]
     @Default(.refreshInterval) var refreshInterval
-  
 
     var body: some View {
-       
-        HStack{
+        HStack {
             Text("Refresh interval :")
             Picker("", selection: $refreshInterval) {
                 ForEach(refreshTimes, id: \.self) {

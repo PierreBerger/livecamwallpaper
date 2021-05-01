@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		8F39DD882627A77800F0C010 /* Defaults in Frameworks */ = {isa = PBXBuildFile; productRef = 8F39DD872627A77800F0C010 /* Defaults */; };
 		8F39DDAC2628EE2B00F0C010 /* SkapingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F39DDAB2628EE2B00F0C010 /* SkapingController.swift */; };
-		8F39DDB42628F00200F0C010 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F39DDB32628F00200F0C010 /* Events.swift */; };
 		8F39DDB92628F90100F0C010 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F39DDB82628F90100F0C010 /* Utilities.swift */; };
 		8F5CEDA3263B5296009481E4 /* Bugsnag in Frameworks */ = {isa = PBXBuildFile; productRef = 8F5CEDA2263B5296009481E4 /* Bugsnag */; };
 		8F9AFE04261FA93C0086DCCA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AFE03261FA93C0086DCCA /* AppDelegate.swift */; };
@@ -24,7 +23,6 @@
 
 /* Begin PBXFileReference section */
 		8F39DDAB2628EE2B00F0C010 /* SkapingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkapingController.swift; sourceTree = "<group>"; };
-		8F39DDB32628F00200F0C010 /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
 		8F39DDB82628F90100F0C010 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		8F9AFE00261FA93C0086DCCA /* LivecamWallpaper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LivecamWallpaper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F9AFE03261FA93C0086DCCA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -92,7 +90,6 @@
 				8F9AFE07261FA93C0086DCCA /* LivecamWallpaper.xcdatamodeld */,
 				8F9AFE0C261FA93F0086DCCA /* Preview Content */,
 				8F9AFE9E26279B200086DCCA /* Defaults.swift */,
-				8F39DDB32628F00200F0C010 /* Events.swift */,
 				8F39DDB82628F90100F0C010 /* Utilities.swift */,
 			);
 			path = LivecamWallpaper;
@@ -132,6 +129,7 @@
 				8F9AFDFC261FA93C0086DCCA /* Sources */,
 				8F9AFDFD261FA93C0086DCCA /* Frameworks */,
 				8F9AFDFE261FA93C0086DCCA /* Resources */,
+				8F5390B1263E187100EA6B2E /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -195,6 +193,26 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		8F5390B1263E187100EA6B2E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		8F9AFDFC261FA93C0086DCCA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -204,7 +222,6 @@
 				8F39DDAC2628EE2B00F0C010 /* SkapingController.swift in Sources */,
 				8F9AFE09261FA93C0086DCCA /* LivecamWallpaper.xcdatamodeld in Sources */,
 				8F9AFE9F26279B200086DCCA /* Defaults.swift in Sources */,
-				8F39DDB42628F00200F0C010 /* Events.swift in Sources */,
 				8F9AFE802623768D0086DCCA /* Preferences.swift in Sources */,
 				8F39DDB92628F90100F0C010 /* Utilities.swift in Sources */,
 				8F9AFE04261FA93C0086DCCA /* AppDelegate.swift in Sources */,
