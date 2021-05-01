@@ -43,7 +43,7 @@ final class SkapingController {
             
             let now = Date()
             let formatter = DateFormatter()
-            formatter.dateFormat = "y-MM-d HH:mm"
+            formatter.dateFormat = "y-MM-dd HH:mm"
             let formatedDate = formatter.string(from: now)
             
             let imagesURL = URL(string: "https://api.skaping.com//media/search")!
