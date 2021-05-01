@@ -80,7 +80,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             self.changeWallpaper(livecamURL: url)
         } else {
             NSLog("Error: Url is missing")
-            setError(message: "Error: Url is missing")
+            setError(message: "Url is missing")
         }
     }
     
@@ -100,7 +100,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     
     func setError(message: String) {
-        self.displayError(message: message)
+        self.displayError(message: "Error: \(message.wrapped(atLength: 36))")
         isError = true
         refreshMenu()
     }
@@ -113,7 +113,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func displayError(message: String) {
-            menu.item(at: 0)?.title = message
+        menu.item(at: 0)?.attributedTitle = NSAttributedString(string: message)
             menu.item(at: 0)?.isHidden = false
             menu.item(at: 1)?.isHidden = false
     

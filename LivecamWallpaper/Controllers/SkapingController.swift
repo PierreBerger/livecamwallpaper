@@ -7,12 +7,12 @@ final class SkapingController {
     func fetchImage(livecamURL: URL, completion: @escaping (String?) -> Void) {
         URLSession.shared.dataTask(with: livecamURL) { data, response, error in
             if let error = error {
-                completion("Error: \(error.localizedDescription)")
+                completion(error.localizedDescription)
                 return
             }
             guard let httpResponse = response as? HTTPURLResponse,
                   (200...299).contains(httpResponse.statusCode) else {
-                completion("Error: Livecam not found")
+                completion("Livecam not found")
                 return
             }
             guard
@@ -20,20 +20,20 @@ final class SkapingController {
                 let data = data,
                 let str = String(data: data, encoding: .utf8)
             else {
-                completion("Error: Livecam not found")
+                completion("Livecam not found")
                 return
             }
             
             let regex = try? NSRegularExpression(pattern: "SkapingAPI.setConfig\\('http://api.skaping.com/', '(.*)'\\)")
             let match = regex?.firstMatch(in: str, options: [], range: NSRange(location: 0, length: str.utf8.count-100))
             if match == nil {
-                completion("Error: Livecam not found")
+                completion("Livecam not found")
                 return
             }
             let range = match!.range(at:1)
             
             guard let keyRange = Range(range, in: str) else {
-                completion("Error: Livecam not found")
+                completion("Livecam not found")
                 return
             }
             
@@ -54,20 +54,20 @@ final class SkapingController {
             
             URLSession.shared.dataTask(with: request) { data, response, error in
                 if let error = error {
-                    completion("Error: \(error.localizedDescription)")
+                    completion(error.localizedDescription)
                     return
                 }
                 
                 guard let httpResponse = response as? HTTPURLResponse,
                       (200...299).contains(httpResponse.statusCode) else {
-                    completion("Error: Can't decode response, check URL")
+                    completion("Can't decode response, check URL")
                     return
                 }
                 
                 guard
                     let response = try? JSONDecoder().decode(SkapingResponse.self, from: data!)
                 else {
-                    completion("Error: Can't decode response, check URL")
+                    completion("Can't decode response, check URL")
                     return
                 }
                 
