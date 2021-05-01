@@ -42,3 +42,18 @@ extension String {
         return string
     }
 }
+
+enum MyApp {
+    static let isFirstLaunch: Bool = {
+        let key = "hasLaunched"
+        
+        if UserDefaults.standard.bool(forKey: key) {
+            return false
+        } else {
+            UserDefaults.standard.set(true, forKey: key)
+            return true
+        }
+    }()
+}
+
+

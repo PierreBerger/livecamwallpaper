@@ -18,6 +18,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(_: Notification) {
         Bugsnag.start()
+        if MyApp.isFirstLaunch {
+            openPreferences()
+        }
         setup()
     }
     
@@ -179,7 +182,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
     }
     
-    @objc func openPreferences(_: NSStatusBarButton?) {
+    @objc func openPreferences() {
         NSLog("Open preferences window")
         NSApp.setActivationPolicy(.regular)
         let contentView = PreferencesView()
