@@ -29,6 +29,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             for nsScreen in NSScreen.screens {
                 try NSWorkspace.shared.setDesktopImageURL(savedUrl, for: nsScreen, options: [:])
             }
+            clearFolder()
             clearError()
             refreshMenu()
         } catch {
@@ -51,10 +52,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                             in: .userDomainMask,
                                             appropriateFor: nil,
                                             create: false)
-                
-                    let savedURL = documentsURL.appendingPathComponent(fileURL.lastPathComponent)
+                let savedURL = documentsURL.appendingPathComponent(String(NSDate().timeIntervalSince1970))
                 try FileManager.default.moveItem(at: fileURL, to: savedURL)
-                print ("file url : \(savedURL)")
                 
                 self.changeWallpaper(savedUrl: savedURL)
                 
@@ -82,6 +81,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         } else {
             NSLog("Error: Url is missing")
             setError(message: "Error: Url is missing")
+        }
+    }
+    
+    func clearFolder() {
+        let fileManager = FileManager.default
+        let myDocuments = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        guard var filePaths = try? fileManager.contentsOfDirectory(at: myDocuments, includingPropertiesForKeys: nil, options: []) else { return }
+        filePaths.sort {
+            $0.absoluteString < $1.absoluteString
+        }
+        if(filePaths.count > 1) {
+            for i in 0...filePaths.count-2 {
+                try? fileManager.removeItem(at: filePaths[i])
+            }
         }
     }
     
