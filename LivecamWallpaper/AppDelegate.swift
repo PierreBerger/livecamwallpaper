@@ -153,6 +153,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(menuTitle)
         menu.addItem(.separator())
     
+        let menuVersion = NSMenuItem(title: "Version \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "unknown")" , action: nil, keyEquivalent: "")
+        menuVersion.isEnabled = false
+        menu.addItem(menuVersion)
+        
         menu.addItem(withTitle: "Preferences", action: #selector(openPreferences), keyEquivalent: ",")
         menu.addItem(.separator())
         menu.addItem(withTitle: "Quit", action: #selector(terminate), keyEquivalent: "q")
