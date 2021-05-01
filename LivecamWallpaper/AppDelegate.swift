@@ -177,6 +177,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @objc func openPreferences(_: NSStatusBarButton?) {
         NSLog("Open preferences window")
+        NSApp.setActivationPolicy(.regular)
         let contentView = PreferencesView()
         if window != nil {
             window.close()
@@ -188,6 +189,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             defer: false
         )
         
+        NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.windowClosed),  name: NSWindow.willCloseNotification, object: nil)
+
+        
         window.title = "LivecamWallpaper Preferences"
         window.contentView = NSHostingView(rootView: contentView)
         window.makeKeyAndOrderFront(nil)
@@ -196,9 +200,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         let controller = NSWindowController(window: window)
         controller.showWindow(self)
-        
         window.center()
         window.orderFrontRegardless()
+    }
+    
+    @objc
+    func windowClosed(notification: NSNotification) {
+        let window = notification.object as? NSWindow
+        if let windowTitle = window?.title {
+            if windowTitle == "LivecamWallpaper Preferences" {
+                NSApp.setActivationPolicy(.accessory)
+
+            }
+        }
     }
     
     @objc func terminate() {
