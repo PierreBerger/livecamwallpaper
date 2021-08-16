@@ -10,9 +10,9 @@
 		8F39DD882627A77800F0C010 /* Defaults in Frameworks */ = {isa = PBXBuildFile; productRef = 8F39DD872627A77800F0C010 /* Defaults */; };
 		8F39DDAC2628EE2B00F0C010 /* SkapingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F39DDAB2628EE2B00F0C010 /* SkapingController.swift */; };
 		8F39DDB92628F90100F0C010 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F39DDB82628F90100F0C010 /* Utilities.swift */; };
+		8F3A566626CABC0100287AB5 /* updater.sh in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8F648C5526C7DF310027BA10 /* updater.sh */; };
 		8F5390B3263F47CB00EA6B2E /* updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5390B2263F47CB00EA6B2E /* updater.swift */; };
 		8F5390B52641EB8D00EA6B2E /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5390B42641EB8D00EA6B2E /* Update.swift */; };
-		8F57091A26C92A03003CDAF5 /* updater.sh in Resources */ = {isa = PBXBuildFile; fileRef = 8F648C5526C7DF310027BA10 /* updater.sh */; };
 		8F5CEDA3263B5296009481E4 /* Bugsnag in Frameworks */ = {isa = PBXBuildFile; productRef = 8F5CEDA2263B5296009481E4 /* Bugsnag */; };
 		8F70246926CA7AD100B63440 /* LivecamWallpaperUpdaterService.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 8F70245D26CA7AD100B63440 /* LivecamWallpaperUpdaterService.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8F70246D26CA7AE600B63440 /* LivecamWallpaperUpdaterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F70245326CA76BA00B63440 /* LivecamWallpaperUpdaterService.swift */; };
@@ -58,6 +58,7 @@
 			dstPath = Scripts;
 			dstSubfolderSpec = 7;
 			files = (
+				8F3A566626CABC0100287AB5 /* updater.sh in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,7 +310,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F57091A26C92A03003CDAF5 /* updater.sh in Resources */,
 				8F9AFE11261FA93F0086DCCA /* Main.storyboard in Resources */,
 				8F9AFE0E261FA93F0086DCCA /* Preview Assets.xcassets in Resources */,
 				8F9AFE0B261FA93F0086DCCA /* Assets.xcassets in Resources */,
@@ -561,7 +561,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 0.0.2;
+				MARKETING_VERSION = 0.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = fr.pierreberger.LivecamWallpaper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -589,7 +589,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 0.0.2;
+				MARKETING_VERSION = 0.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = fr.pierreberger.LivecamWallpaper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
