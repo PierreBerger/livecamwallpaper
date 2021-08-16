@@ -2,6 +2,9 @@ import Bugsnag
 import Cocoa
 import Defaults
 import SwiftUI
+import os.log
+
+var log = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "LivecamWallpaper")
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -37,12 +40,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         URLSession.shared.downloadTask(with: url) { urlOrNil, _, _ in
             guard let fileURL = urlOrNil else { return }
             do {
+
                 let documentsURL = try
                     FileManager.default.url(for: .documentDirectory,
                                             in: .userDomainMask,
                                             appropriateFor: nil,
                                             create: false)
-                let savedURL = documentsURL.appendingPathComponent(String(NSDate().timeIntervalSince1970))
+
+                let dataPath = documentsURL.appendingPathComponent("wallpaper")
+                if !FileManager.default.fileExists(atPath: dataPath.path) {
+                    do {
+                        try FileManager.default.createDirectory(atPath: dataPath.path, withIntermediateDirectories: true, attributes: nil)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+
+                let savedURL = dataPath.appendingPathComponent(String(NSDate().timeIntervalSince1970))
                 try FileManager.default.moveItem(at: fileURL, to: savedURL)
 
                 self.changeWallpaper(savedUrl: savedURL)
@@ -58,6 +72,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 self.setError(message: error!)
                 return
             }
+            NSLog("Wallpaper updated")
         }
     }
 
@@ -73,9 +88,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func clearFolder() {
         let fileManager = FileManager.default
-        let myDocuments = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let documentsUrl = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let wallpaperDir = documentsUrl.appendingPathComponent("wallpaper")
         guard var filePaths = try?
-                fileManager.contentsOfDirectory(at: myDocuments, includingPropertiesForKeys: nil, options: [])
+                fileManager.contentsOfDirectory(at: wallpaperDir, includingPropertiesForKeys: nil, options: [])
         else { return }
         filePaths.sort {
             $0.absoluteString < $1.absoluteString
@@ -196,7 +212,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         window = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 700, height: 570),
-            styleMask: [.closable, .titled, .resizable],
+            styleMask: [.closable, .titled],
             backing: .buffered,
             defer: false
         )

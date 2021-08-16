@@ -1,5 +1,9 @@
 import Defaults
 import SwiftUI
+import os.log
+
+let updater = Updater()
+private let updateWindow: UpdateWindow = UpdateWindow()
 
 struct PreferencesView: View {
     var body: some View {
@@ -9,6 +13,8 @@ struct PreferencesView: View {
             SettingsSection()
             Divider()
             PreferencesSection()
+            Divider()
+            UpdateSection()
         }
         .padding()
     }
@@ -62,6 +68,40 @@ struct PreferencesSection: View {
                 .padding(.leading, 4)
         }
     }
+}
+
+struct UpdateSection: View {
+    var body: some View {
+        VStack(alignment: .center) {
+            Image(nsImage: NSImage(named: "AppIcon")!).resizable().frame(width: 120.0, height: 120.0)
+            Text("LivecamWallpaper").font(.system(size: 20)).bold()
+            Text("Version \(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String)")
+                .foregroundColor(.gray)
+            Button("Check for update", action: {
+                update()
+            })
+        }.frame(width: 700, alignment: .center)
+    }
+}
+
+func update() {
+    updater.check { result, error in
+        if error != nil {
+            os_log(.error, log: log, "error updater.check(): %s", "\(error!.localizedDescription)")
+            return
+        }
+
+        guard error == nil, let version: Version = result else {
+            os_log(.error, log: log, "download error(): %s", "\(error!.localizedDescription)")
+            return
+        }
+
+        DispatchQueue.main.async(execute: {
+            updateWindow.open(version)
+            return
+        })
+    }
+
 }
 
 struct Preferences_Previews: PreviewProvider {

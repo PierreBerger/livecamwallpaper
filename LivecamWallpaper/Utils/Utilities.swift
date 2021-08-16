@@ -1,6 +1,8 @@
 import SwiftUI
 
-// see https://github.com/sindresorhus/Plash/blob/4ebd13ba47632aba072ad4abe4ace9a2b7b3539c/Plash/Utilities.swift#L533
+// Inspired from https://github.com/sindresorhus/Plash/blob/4ebd13ba47632aba072ad4abe4ace9a2b7b3539c/Plash/Utilities.swift#L533
+extension String: LocalizedError {
+}
 
 extension String {
     var trimmedTrailing: Self {
@@ -39,6 +41,18 @@ extension String {
         }
 
         return string
+    }
+
+    public func widthOfString(usingFont font: NSFont) -> CGFloat {
+        let fontAttributes = [NSAttributedString.Key.font: font]
+        let size = self.size(withAttributes: fontAttributes)
+        return size.width
+    }
+}
+
+extension URL {
+    func checkFileExist() -> Bool {
+        return FileManager.default.fileExists(atPath: self.path)
     }
 }
 
