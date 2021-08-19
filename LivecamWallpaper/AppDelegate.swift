@@ -17,10 +17,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_: Notification) {
         Bugsnag.start()
+        parseArguments()
+        setup()
         if MyApp.isFirstLaunch {
             openPreferences()
+        } else {
+            resetInterval()
         }
-        setup()
     }
 
     func changeWallpaper(savedUrl: URL) {
@@ -36,25 +39,30 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
+    func createDirectories() -> URL? {
+            let wallpaperFolder = FileManager.default.homeDirectoryForCurrentUser
+                .appendingPathComponent(".livecamWallpaper")
+                .appendingPathComponent("wallpapers")
+
+            if !FileManager.default.fileExists(atPath: wallpaperFolder.path) {
+                do {
+                    try FileManager.default.createDirectory(atPath: wallpaperFolder.path, withIntermediateDirectories: true, attributes: nil)
+
+                    return wallpaperFolder
+                } catch {
+                    print(error.localizedDescription)
+                    return nil
+                }
+            }
+            return wallpaperFolder
+    }
+
     func downloadImage(url: URL) {
         URLSession.shared.downloadTask(with: url) { urlOrNil, _, _ in
             guard let fileURL = urlOrNil else { return }
+            guard let dataPath = self.createDirectories() else { return }
+
             do {
-
-                let documentsURL = try
-                    FileManager.default.url(for: .documentDirectory,
-                                            in: .userDomainMask,
-                                            appropriateFor: nil,
-                                            create: false)
-
-                let dataPath = documentsURL.appendingPathComponent("wallpaper")
-                if !FileManager.default.fileExists(atPath: dataPath.path) {
-                    do {
-                        try FileManager.default.createDirectory(atPath: dataPath.path, withIntermediateDirectories: true, attributes: nil)
-                    } catch {
-                        print(error.localizedDescription)
-                    }
-                }
 
                 let savedURL = dataPath.appendingPathComponent(String(NSDate().timeIntervalSince1970))
                 try FileManager.default.moveItem(at: fileURL, to: savedURL)
@@ -88,8 +96,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func clearFolder() {
         let fileManager = FileManager.default
-        let documentsUrl = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let wallpaperDir = documentsUrl.appendingPathComponent("wallpaper")
+        let wallpaperDir = FileManager.default.homeDirectoryForCurrentUser
+            .appendingPathComponent(".livecamWallpaper")
+            .appendingPathComponent("wallpapers")
+
         guard var filePaths = try?
                 fileManager.contentsOfDirectory(at: wallpaperDir, includingPropertiesForKeys: nil, options: [])
         else { return }
@@ -193,6 +203,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func setup() {
+        _ = createDirectories()
+
         menu = NSMenu()
         setupMenu()
         statusBarItem = NSStatusBar.system.statusItem(withLength: CGFloat(NSStatusItem.variableLength))

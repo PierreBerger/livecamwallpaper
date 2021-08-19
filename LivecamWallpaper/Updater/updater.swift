@@ -1,6 +1,5 @@
 import Cocoa
 import SystemConfiguration
-import LivecamWallpaperUpdaterService
 
 // see https://github.com/exelban/stats/blob/4351d25a222d00bfe8d74b5a169998c9aa6d4dfc/Kit/plugins/Updater.swift
 
@@ -82,21 +81,11 @@ public class Updater {
             NSLog(fileURL.debugDescription)
             do {
                 let downloadsURL = try
-                    FileManager.default.url(for: .documentDirectory,
+                    FileManager.default.url(for: .downloadsDirectory,
                                             in: .userDomainMask,
                                             appropriateFor: nil,
                                             create: false)
-                let updateFolder = downloadsURL.appendingPathComponent("updates")
-
-                if !FileManager.default.fileExists(atPath: updateFolder.path) {
-                    do {
-                        try FileManager.default.createDirectory(atPath: updateFolder.path, withIntermediateDirectories: true, attributes: nil)
-                    } catch {
-                        print(error.localizedDescription)
-                    }
-                }
-
-                let destinationURL = updateFolder.appendingPathComponent(url.lastPathComponent)
+                let destinationURL = downloadsURL.appendingPathComponent(url.lastPathComponent)
 
                 self.copyFile(from: fileURL, to: destinationURL) { (path, error) in
                     if error != nil {
@@ -150,22 +139,32 @@ public class Updater {
             .replacingOccurrences(of: "LivecamWallpaper.app", with: "")
             .replacingOccurrences(of: "//", with: "/")
 
-        let connection = NSXPCConnection(serviceName: "fr.pierreberger.LivecamWallpaperUpdaterService")
-        connection.remoteObjectInterface = NSXPCInterface(with: LivecamWallpaperUpdaterServiceProtocol.self)
-        connection.resume()
+        NSLog("Started new version installation...")
 
-        let service = connection.remoteObjectProxyWithErrorHandler { error in
-            print("Received error:", error)
-        } as? LivecamWallpaperUpdaterServiceProtocol
+        _ = syncShell("mkdir /tmp/LivecamWallpaper") // make sure that directory exist
+        let res = syncShell("/usr/bin/hdiutil attach \(path) -mountpoint /tmp/LivecamWallpaper -noverify -nobrowse -noautoopen") // mount the dmg
 
-        service?.installNewVersion(
-            path,
-            tmpDir: NSTemporaryDirectory(),
-            pwd: pwd
-        ) { response in
-            print("Response from XPC service:", response)
-            guard response != "OK" else { exit(0) }
+        NSLog("DMG is mounted")
+
+        let tmpDir = NSTemporaryDirectory()
+
+        if res.contains("is busy") { // dmg can be busy, if yes, unmount it and mount again
+            print("DMG is busy, remounting")
+
+            _ = syncShell("/usr/bin/hdiutil detach \(tmpDir)/LivecamWallpaper")
+            _ = syncShell("/usr/bin/hdiutil attach \(path) -mountpoint /tmp/LivecamWallpaper -noverify -nobrowse -noautoopen")
         }
 
+        _ = syncShell("cp -rf /tmp/LivecamWallpaper/LivecamWallpaper.app/Contents/Resources/Scripts/updater.sh \(tmpDir)/updater.sh")
+
+        NSLog("Script is copied to $TMPDIR/updater.sh")
+
+        let dmg = path.replacingOccurrences(of: "file://", with: "")
+
+        asyncShell("sh \(tmpDir)/updater.sh --app \(pwd) --dmg \(dmg) >/dev/null &") // run updater script in in background
+
+        NSLog("Run updater.sh with app: \(pwd) and dmg: \(dmg)")
+
+        exit(0)
     }
 }

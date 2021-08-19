@@ -1,6 +1,8 @@
 import SwiftUI
 import Cocoa
 
+// see https://github.com/exelban/stats/blob/bf5b4c406e86e8ddf301e7b2c25d557c6e97c842/Stats/Views/Update.swift
+
 class UpdateWindow: NSWindow, NSWindowDelegate {
     private let viewController: UpdateViewController = UpdateViewController()
     init() {
@@ -106,7 +108,7 @@ private class UpdateView: NSView {
         let latestVersion: NSTextView = NSTextView(frame: NSRect(
         x: (view.frame.width-currentVersionWidth)/2,
             y: currentVersion.frame.origin.y - 22,
-            width: latestVersionWidth,
+            width: latestVersionWidth + 5,
             height: 16
         ))
         latestVersion.string = latestVersionString
