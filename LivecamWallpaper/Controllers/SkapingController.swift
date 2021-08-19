@@ -72,6 +72,11 @@ final class SkapingController {
                     return
                 }
 
+                if response.medias.count == 0 {
+                    completion("No media for this livecam")
+                    return
+                }
+
                 DispatchQueue.main.async {
                     let image = response.medias[response.medias.count - 1].src
                     let secureimage = image.replacingOccurrences(of: "http", with: "https")
