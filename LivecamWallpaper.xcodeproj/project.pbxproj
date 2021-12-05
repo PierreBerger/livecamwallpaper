@@ -14,7 +14,6 @@
 		8F3A566626CABC0100287AB5 /* updater.sh in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8F648C5526C7DF310027BA10 /* updater.sh */; };
 		8F5390B3263F47CB00EA6B2E /* updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5390B2263F47CB00EA6B2E /* updater.swift */; };
 		8F5390B52641EB8D00EA6B2E /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5390B42641EB8D00EA6B2E /* Update.swift */; };
-		8F5CEDA3263B5296009481E4 /* Bugsnag in Frameworks */ = {isa = PBXBuildFile; productRef = 8F5CEDA2263B5296009481E4 /* Bugsnag */; };
 		8F9AFE04261FA93C0086DCCA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AFE03261FA93C0086DCCA /* AppDelegate.swift */; };
 		8F9AFE09261FA93C0086DCCA /* LivecamWallpaper.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AFE07261FA93C0086DCCA /* LivecamWallpaper.xcdatamodeld */; };
 		8F9AFE0B261FA93F0086DCCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F9AFE0A261FA93F0086DCCA /* Assets.xcassets */; };
@@ -23,6 +22,7 @@
 		8F9AFE802623768D0086DCCA /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AFE7F2623768D0086DCCA /* Preferences.swift */; };
 		8F9AFE942627809F0086DCCA /* skapingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AFE932627809F0086DCCA /* skapingResponse.swift */; };
 		8F9AFE9F26279B200086DCCA /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AFE9E26279B200086DCCA /* Defaults.swift */; };
+		8FCC0127275D3382003C47F2 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 8FCC0126275D3382003C47F2 /* Sentry */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -67,6 +67,7 @@
 		8F9AFE8826263A150086DCCA /* LivecamWallpaperRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LivecamWallpaperRelease.entitlements; sourceTree = "<group>"; };
 		8F9AFE932627809F0086DCCA /* skapingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = skapingResponse.swift; sourceTree = "<group>"; };
 		8F9AFE9E26279B200086DCCA /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
+		8FCC0128275D58C1003C47F2 /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,8 +75,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F5CEDA3263B5296009481E4 /* Bugsnag in Frameworks */,
 				8F39DD882627A77800F0C010 /* Defaults in Frameworks */,
+				8FCC0127275D3382003C47F2 /* Sentry in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,6 +111,7 @@
 		8F9AFDF7261FA93B0086DCCA = {
 			isa = PBXGroup;
 			children = (
+				8FCC0128275D58C1003C47F2 /* Development.xcconfig */,
 				8F9AFE02261FA93C0086DCCA /* LivecamWallpaper */,
 				8F9AFE01261FA93C0086DCCA /* Products */,
 			);
@@ -191,7 +193,7 @@
 			name = LivecamWallpaper;
 			packageProductDependencies = (
 				8F39DD872627A77800F0C010 /* Defaults */,
-				8F5CEDA2263B5296009481E4 /* Bugsnag */,
+				8FCC0126275D3382003C47F2 /* Sentry */,
 			);
 			productName = LivecamWallpaper;
 			productReference = 8F9AFE00261FA93C0086DCCA /* LivecamWallpaper.app */;
@@ -222,7 +224,7 @@
 			mainGroup = 8F9AFDF7261FA93B0086DCCA;
 			packageReferences = (
 				8F39DD862627A77800F0C010 /* XCRemoteSwiftPackageReference "Defaults" */,
-				8F5CEDA1263B5296009481E4 /* XCRemoteSwiftPackageReference "bugsnag-cocoa" */,
+				8FCC0125275D3382003C47F2 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 			);
 			productRefGroup = 8F9AFE01261FA93C0086DCCA /* Products */;
 			projectDirPath = "";
@@ -300,6 +302,7 @@
 /* Begin XCBuildConfiguration section */
 		8F9AFE2A261FA9400086DCCA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8FCC0128275D58C1003C47F2 /* Development.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -361,6 +364,7 @@
 		};
 		8F9AFE2B261FA9400086DCCA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8FCC0128275D58C1003C47F2 /* Development.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -415,6 +419,7 @@
 		};
 		8F9AFE2D261FA9400086DCCA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8FCC0128275D58C1003C47F2 /* Development.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -422,7 +427,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"LivecamWallpaper/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -433,7 +438,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 0.2.1;
+				MARKETING_VERSION = 0.2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = fr.pierreberger.LivecamWallpaper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -444,6 +449,7 @@
 		};
 		8F9AFE2E261FA9400086DCCA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8FCC0128275D58C1003C47F2 /* Development.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -451,7 +457,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"LivecamWallpaper/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -462,7 +468,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 0.2.1;
+				MARKETING_VERSION = 0.2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = fr.pierreberger.LivecamWallpaper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -503,12 +509,12 @@
 				minimumVersion = 4.2.1;
 			};
 		};
-		8F5CEDA1263B5296009481E4 /* XCRemoteSwiftPackageReference "bugsnag-cocoa" */ = {
+		8FCC0125275D3382003C47F2 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/bugsnag/bugsnag-cocoa";
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 6.9.1;
+				minimumVersion = 7.5.4;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -519,10 +525,10 @@
 			package = 8F39DD862627A77800F0C010 /* XCRemoteSwiftPackageReference "Defaults" */;
 			productName = Defaults;
 		};
-		8F5CEDA2263B5296009481E4 /* Bugsnag */ = {
+		8FCC0126275D3382003C47F2 /* Sentry */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8F5CEDA1263B5296009481E4 /* XCRemoteSwiftPackageReference "bugsnag-cocoa" */;
-			productName = Bugsnag;
+			package = 8FCC0125275D3382003C47F2 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = Sentry;
 		};
 /* End XCSwiftPackageProductDependency section */
 

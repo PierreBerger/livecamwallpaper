@@ -1,4 +1,4 @@
-import Bugsnag
+import Sentry
 import Cocoa
 import Defaults
 import SwiftUI
@@ -16,7 +16,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var refreshTimer: Timer?
 
     func applicationDidFinishLaunching(_: Notification) {
-        Bugsnag.start()
+        SentrySDK.start { options in
+                options.tracesSampleRate = 1.0
+                options.dsn = Bundle.main.object(forInfoDictionaryKey: "SentryDSN") as? String
+            }
+
         parseArguments()
         setup()
         if MyApp.isFirstLaunch {

@@ -24,8 +24,7 @@ You can download the latest version [here](https://github.com/pierreberger/Livec
 
 ## Libraries
 
- - <img align="center" src="assets/bugsnag.png" width="100">&nbsp;&nbsp;LivecamWallpaper is using [Bugsnag](https://www.bugsnag.com/) for error monitoring.
-
+- [Sentry](https://sentry.io)
 - [Defaults](https://github.com/sindresorhus/Defaults)
 
 ## Thanks
